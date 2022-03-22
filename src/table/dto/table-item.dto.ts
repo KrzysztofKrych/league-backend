@@ -2,9 +2,9 @@ import { IsNotEmpty, IsNumber, IsObject, IsString } from 'class-validator';
 import { ResultDto } from './result.dto';
 
 export class TableItemDto {
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  teamId: number;
+  id: string;
 
   @IsString()
   @IsNotEmpty()
@@ -17,4 +17,10 @@ export class TableItemDto {
   @IsObject()
   @IsNotEmpty()
   results: ResultDto;
+}
+
+export class FullTableItemDto extends TableItemDto {
+  @IsNumber()
+  @IsNotEmpty()
+  position: number;
 }
