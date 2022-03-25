@@ -1,8 +1,9 @@
 import { UserDto } from '../users/dto/user.dto';
 
 export const UserMock: UserDto = {
-  id: '1',
+  _id: '1',
   username: 'testUser',
   password: 'test',
-  teamId: '1'
+  teamId: '1',
+  email: 'email',
 };

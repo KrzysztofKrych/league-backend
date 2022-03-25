@@ -1,23 +1,15 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Res,
-  Response,
-  UseGuards,
-} from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Body, Controller, Post, Res, Response } from '@nestjs/common';
 import { sendResponse } from '../utils/helpers';
+import { RegisterBodyDto } from './dto/register-body.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard)
-  @Get('/:id')
-  async getUser(@Param() params: { id: string }, @Res() res: Response) {
-    const payload = await this.usersService.getUser(params.id);
+  @Post('/register')
+  async register(@Body() body: RegisterBodyDto, @Res() res: Response) {
+    const payload = await this.usersService.register(body);
     return sendResponse(res, payload);
   }
 }

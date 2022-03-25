@@ -1,9 +1,11 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class UserResponseDto {
   @IsString()
   @IsNotEmpty()
-  id: string;
+  @Transform((id) => id.value.toString())
+  _id: string;
 
   @IsString()
   @IsNotEmpty()
@@ -11,5 +13,13 @@ export class UserResponseDto {
 
   @IsString()
   @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsOptional()
   teamId: string;
+
+  constructor(partial: Partial<UserResponseDto>) {
+    Object.assign(this, partial);
+  }
 }
