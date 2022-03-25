@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { UserMock } from '../mocks/users';
 import { MessageStatus } from '../utils/enums';
 import { getErrorResponseBody, getSuccessResponseBody } from '../utils/helpers';
 import { RegisterBodyDto } from './dto/register-body.dto';
@@ -19,8 +18,8 @@ export class UsersService {
     try {
       const user = await this.getUserById(id);
       return getSuccessResponseBody(user);
-    } catch (e) {
-      return getErrorResponseBody(UserMock, MessageStatus.SOMETHING_WENT_WRONG);
+    } catch (error) {
+      return getErrorResponseBody(error, MessageStatus.SOMETHING_WENT_WRONG);
     }
   }
 
