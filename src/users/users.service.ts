@@ -7,6 +7,7 @@ import { UserDto } from './dto/user.dto';
 import { User, UserDocument } from './mongo';
 import { Model } from 'mongoose';
 import { UserResponseDto } from './dto/user-response.dto';
+import { hashText } from './utils/helpers';
 
 @Injectable()
 export class UsersService {
@@ -30,7 +31,10 @@ export class UsersService {
         body.email,
       );
       if (!isEmailExist) {
-        const user = await this.createUser(body);
+        const user = await this.createUser({
+          ...body,
+          password: await hashText(body.password),
+        });
         return getSuccessResponseBody(user);
       }
       return getErrorResponseBody(
