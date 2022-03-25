@@ -8,4 +8,8 @@ export class UserResponseDto {
   @IsString()
   @IsNotEmpty()
   username: string;
+
+  @IsString()
+  @IsNotEmpty()
+  teamId: string;
 }
