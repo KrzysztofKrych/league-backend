@@ -19,6 +19,6 @@ export class PlayersService {
     }
   }
   private async getPlayerById(id: string): Promise<PlayerDto> {
-    return PlayerMock
+    return PlayerMock;
   }
 }

@@ -1,5 +1,5 @@
 import { ResponsePayload } from '../dto/response-payload';
-import { responseStatuses } from './const';
+import { responseStatuses } from './consts';
 import { MessageStatus } from './enums';
 
 export const sendResponse = (res, payload: ResponsePayload) => {

@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class PlayerDto {
+export class UserResponseDto {
   @IsString()
   @IsNotEmpty()
   id: string;
 
   @IsString()
   @IsNotEmpty()
-  name: string;
+  username: string;
 }
