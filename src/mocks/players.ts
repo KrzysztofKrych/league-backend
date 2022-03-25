@@ -1,8 +1,6 @@
 export const PlayerMock = {
-    id: '1',
-    name: 'playername'
-}
+  id: '1',
+  name: 'playername',
+};
 
-export const PlayerMocks = [
-    PlayerMock
-]
+export const PlayerMocks = [PlayerMock];
