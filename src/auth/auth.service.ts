@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginRequestDto } from './dto/login-request.dto';
 import { MessageStatus } from '../utils/enums';
 import { UserDto } from '../users/dto/user.dto';
+import { compareText } from '../users/utils/helpers';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
     pass: string,
   ): Promise<UserResponseDto | null> {
     const user = await this.usersService.getUserByName(username);
-    if (user && user.password === pass) {
+    if (user && (await compareText(pass, user.password))) {
       const { password, ...result } = user;
       return result;
     }
