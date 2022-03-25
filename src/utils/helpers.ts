@@ -14,6 +14,7 @@ export const getSuccessResponseBody = (data: unknown) => {
 };
 
 export const getErrorResponseBody = (data: unknown, message: MessageStatus) => {
+  console.log(data);
   return {
     data,
     message,
