@@ -81,12 +81,12 @@ export class LeaguesService {
     lost,
     points,
     won,
-    name,
+    teamId,
   }: BaseResultsBodyDto): Promise<LeagueDto<ResultDto> | null> {
     const existingLeague = await this.findOne(id);
     if (existingLeague) {
       const results = existingLeague.results.map((result) => {
-        if (result.name === name) {
+        if (result.teamId === teamId) {
           return {
             ...result,
             draw,
@@ -110,17 +110,17 @@ export class LeaguesService {
     lost,
     points,
     won,
-    name,
+    teamId,
   }: BaseResultsBodyDto): Promise<LeagueDto<ResultDto> | null> {
     const existingLeague = await this.findOne(id);
     if (existingLeague) {
-      const existResultName = existingLeague.results.some(
-        (result) => result.name === name,
+      const existResultTeam = existingLeague.results.some(
+        (result) => result.teamId === teamId,
       );
-      if (!existResultName) {
+      if (!existResultTeam) {
         const results = [
           ...existingLeague.results,
-          { draw, lost, points, won, name },
+          { draw, lost, points, won, teamId },
         ];
         existingLeague.results = results;
         await existingLeague.save();

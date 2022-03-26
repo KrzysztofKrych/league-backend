@@ -7,7 +7,7 @@ export class BaseResultsBodyDto {
 
   @IsString()
   @IsNotEmpty()
-  name: string;
+  teamId: string;
 
   @IsNumber()
   @IsNotEmpty()

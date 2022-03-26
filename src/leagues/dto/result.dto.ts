@@ -3,7 +3,7 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 export class ResultDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  teamId: string;
 
   @IsNumber()
   @IsNotEmpty()
