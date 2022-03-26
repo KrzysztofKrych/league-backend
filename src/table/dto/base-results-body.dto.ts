@@ -1,6 +1,10 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class ResultDto {
+export class BaseResultsBodyDto {
+  @IsString()
+  @IsNotEmpty()
+  id: string;
+
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -20,10 +24,4 @@ export class ResultDto {
   @IsNumber()
   @IsNotEmpty()
   points: number;
-}
-
-export class FullResultDto extends ResultDto {
-  @IsNumber()
-  @IsNotEmpty()
-  position: number;
 }

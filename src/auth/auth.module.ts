@@ -14,7 +14,7 @@ import { JWT } from './utils/consts';
     PassportModule,
     JwtModule.register({
       secret: JWT.SECRET_CODE,
-      signOptions: { expiresIn: '600s' },
+      signOptions: { expiresIn: '60000s' }, // TIME SET TO 60000 ONLY FOR TESTS
     }),
   ],
   controllers: [AuthController],
