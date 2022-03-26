@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { UserResponseDto } from '../users/dto/user-response.dto';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { LoginRequestDto } from './dto/login-request.dto';
 import { MessageStatus } from '../utils/enums';
 import { UserDto } from '../users/dto/user.dto';
 import { compareText } from '../users/utils/helpers';
