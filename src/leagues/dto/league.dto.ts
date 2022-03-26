@@ -1,7 +1,7 @@
 import { Transform } from 'class-transformer';
 import { IsArray, IsNotEmpty, IsString } from 'class-validator';
 
-export class TableDto<T> {
+export class LeagueDto<T> {
   @IsString()
   @IsNotEmpty()
   @Transform((id) => id.value.toString())
@@ -19,7 +19,7 @@ export class TableDto<T> {
   @IsNotEmpty()
   results: T[];
 
-  constructor(partial: Partial<TableDto<T>>) {
+  constructor(partial: Partial<LeagueDto<T>>) {
     Object.assign(this, partial);
   }
 }

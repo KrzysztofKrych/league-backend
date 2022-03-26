@@ -11,38 +11,38 @@ import {
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { sendResponse } from '../utils/helpers';
 import { BaseResultsBodyDto } from './dto/base-results-body.dto';
-import { CreateTableBodyDto } from './dto/create-table-body.dto';
-import { TableService } from './table.service';
+import { CreateLeagueBodyDto } from './dto/create-league-body.dto';
+import { LeaguesService } from './leagues.service';
 
-@Controller('table')
-export class TableController {
-  constructor(private readonly tableService: TableService) {}
+@Controller('leagues')
+export class LeaguesController {
+  constructor(private readonly leaguesService: LeaguesService) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('/:id')
-  async getTable(@Param() params: { id: string }, @Res() res: Response) {
-    const payload = await this.tableService.getTable(params.id);
+  async getLeague(@Param() params: { id: string }, @Res() res: Response) {
+    const payload = await this.leaguesService.getLeague(params.id);
     return sendResponse(res, payload);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('/create')
-  async createTable(@Body() body: CreateTableBodyDto, @Res() res: Response) {
-    const payload = await this.tableService.handleCreateTable(body);
+  async createLeague(@Body() body: CreateLeagueBodyDto, @Res() res: Response) {
+    const payload = await this.leaguesService.handleCreateLeague(body);
     return sendResponse(res, payload);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('/add-results')
   async addResults(@Body() body: BaseResultsBodyDto, @Res() res: Response) {
-    const payload = await this.tableService.handleAddResults(body);
+    const payload = await this.leaguesService.handleAddResults(body);
     return sendResponse(res, payload);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('/update-results')
   async updateResults(@Body() body: BaseResultsBodyDto, @Res() res: Response) {
-    const payload = await this.tableService.handleUpdateResults(body);
+    const payload = await this.leaguesService.handleUpdateResults(body);
     return sendResponse(res, payload);
   }
 }

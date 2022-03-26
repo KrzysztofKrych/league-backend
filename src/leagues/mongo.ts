@@ -3,7 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ResultDto } from './dto/result.dto';
 
 @Schema()
-export class Table {
+export class League {
   @Prop({ type: String, required: true })
   season: string;
   @Prop({ type: String, required: true })
@@ -12,6 +12,6 @@ export class Table {
   results: ResultDto[];
 }
 
-export const TableSchema = SchemaFactory.createForClass(Table);
+export const LeagueSchema = SchemaFactory.createForClass(League);
 
-export type TableDocument = Table & Document;
+export type LeagueDocument = League & Document;

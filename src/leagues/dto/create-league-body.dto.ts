@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateTableBodyDto {
+export class CreateLeagueBodyDto {
   @IsString()
   @IsNotEmpty()
   season: string;
