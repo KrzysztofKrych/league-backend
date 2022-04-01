@@ -8,12 +8,14 @@ import { FullResultDto, ResultDto } from './dto/result.dto';
 import { CreateLeagueBodyDto } from './dto/create-league-body.dto';
 import { BaseResultsBodyDto } from './dto/base-results-body.dto';
 import { LeagueDto } from './dto/league.dto';
+import { TeamsService } from '../teams/teams.service';
 
 @Injectable()
 export class LeaguesService {
   constructor(
     @InjectModel(League.name)
     private readonly LeagueModel: Model<LeagueDocument>,
+    private readonly teamsService: TeamsService
   ) {}
 
   async getLeague(id: string) {
@@ -114,10 +116,14 @@ export class LeaguesService {
   }: BaseResultsBodyDto): Promise<LeagueDto<ResultDto> | null> {
     const existingLeague = await this.findOne(id);
     if (existingLeague) {
-      const existResultName = existingLeague.results.some(
+      const isTeamExist = await this.teamsService.getTeamByIdLean(teamId);
+      if(!isTeamExist){
+        throw `Team ${id} doesnt exist`
+      }
+      const existingTeam = existingLeague.results.some(
         (result) => result.teamId === teamId,
       );
-      if (!existResultName) {
+      if (!existingTeam) {
         const results = [
           ...existingLeague.results,
           { draw, lost, points, won, teamId },
@@ -126,6 +132,7 @@ export class LeaguesService {
         await existingLeague.save();
         return new LeagueDto<ResultDto>(existingLeague.toObject());
       }
+      throw `Team already exist in this league ${id}`;
     }
     return null;
   }
