@@ -7,12 +7,14 @@ import { LeagueModule } from './leagues/leagues.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ConfigKey } from './utils/enums';
+import { TeamsModule } from './teams/teams.module';
 
 @Module({
   imports: [
     LeagueModule,
     UsersModule,
     AuthModule,
+    TeamsModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
