@@ -1,5 +1,5 @@
 import {
-    Body,
+  Body,
   Controller,
   Get,
   Param,
@@ -38,6 +38,4 @@ export class TeamsController {
     const payload = await this.teamsService.handleAddPlayer(body);
     return sendResponse(res, payload);
   }
-
-
 }

@@ -24,10 +24,10 @@ export class TeamsService {
     }
   }
 
-  async handleCreateTeam(body: CreateTeamBodyDto){
+  async handleCreateTeam(body: CreateTeamBodyDto) {
     try {
       const team = await this.createTeam(body);
-      if(team){
+      if (team) {
         return getSuccessResponseBody(team);
       }
       return getErrorResponseBody(
@@ -39,10 +39,10 @@ export class TeamsService {
     }
   }
 
-  async handleAddPlayer(body: AddPlayerBodyDto){
+  async handleAddPlayer(body: AddPlayerBodyDto) {
     try {
       const team = await this.addPlayer(body);
-      if(team){
+      if (team) {
         return getSuccessResponseBody(team);
       }
       return getErrorResponseBody(
@@ -54,11 +54,14 @@ export class TeamsService {
     }
   }
 
-  async addPlayer({teamId, userId}: AddPlayerBodyDto): Promise<TeamDto | null>{
+  async addPlayer({
+    teamId,
+    userId,
+  }: AddPlayerBodyDto): Promise<TeamDto | null> {
     const existingTeam = await this.findOne(teamId);
-    if(existingTeam){
-      if(existingTeam.players.includes(userId)){
-        throw "User already exist in this team";
+    if (existingTeam) {
+      if (existingTeam.players.includes(userId)) {
+        throw 'User already exist in this team';
       }
       existingTeam.players = [...existingTeam.players, userId];
       await existingTeam.save();
@@ -67,17 +70,17 @@ export class TeamsService {
     return null;
   }
 
-  async createTeam(
-    body: CreateTeamBodyDto,
-  ): Promise<TeamDto | null> {
-    const newLeague = new this.TeamModel({ ...body, players: body.players ? body.players : [] });
+  async createTeam(body: CreateTeamBodyDto): Promise<TeamDto | null> {
+    const newLeague = new this.TeamModel({
+      ...body,
+      players: body.players ? body.players : [],
+    });
     const result = await newLeague.save();
     if (result) {
       return new TeamDto(result.toObject());
     }
     return null;
   }
-
 
   async getTeamByIdLean(_id: string): Promise<TeamDocument> {
     return await this.TeamModel.findOne({ _id }).lean();
