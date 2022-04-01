@@ -32,7 +32,7 @@ export class LeaguesService {
         return getSuccessResponseBody(league);
       }
       return getErrorResponseBody(
-        { message: 'cannot update result' },
+        { message: 'cannot create league.' },
         MessageStatus.SOMETHING_WENT_WRONG,
       );
     } catch (error) {
