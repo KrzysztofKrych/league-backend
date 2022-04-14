@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { TeamDto } from '../../teams/dto/team.dto';
 
 export class ResultDto {
   @IsString()
@@ -26,4 +27,10 @@ export class FullResultDto extends ResultDto {
   @IsNumber()
   @IsNotEmpty()
   position: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  team: TeamDto;
 }
+
+export type ResultWithTeam = Omit<FullResultDto, "position">

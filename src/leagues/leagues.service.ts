@@ -1,21 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import {  Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { MessageStatus } from '../utils/enums';
 import { getErrorResponseBody, getSuccessResponseBody } from '../utils/helpers';
 import { League, LeagueDocument } from './mongo';
 import { Model } from 'mongoose';
-import { FullResultDto, ResultDto } from './dto/result.dto';
+import { FullResultDto, ResultDto, ResultWithTeam } from './dto/result.dto';
 import { CreateLeagueBodyDto } from './dto/create-league-body.dto';
 import { BaseResultsBodyDto } from './dto/base-results-body.dto';
 import { LeagueDto } from './dto/league.dto';
 import { TeamsService } from '../teams/teams.service';
-
 @Injectable()
 export class LeaguesService {
   constructor(
     @InjectModel(League.name)
     private readonly LeagueModel: Model<LeagueDocument>,
-    private readonly teamsService: TeamsService
+    private readonly teamsService: TeamsService,
   ) {}
 
   async getLeague(id: string) {
@@ -137,7 +136,7 @@ export class LeaguesService {
     return null;
   }
 
-  calculatePositions(league: LeagueDto<ResultDto>): LeagueDto<FullResultDto> {
+  calculatePositions(league: LeagueDto<ResultWithTeam>): LeagueDto<FullResultDto> {
     const sortedByPoints = league.results.sort(
       (first, second) => second.points - first.points,
     );
@@ -159,10 +158,25 @@ export class LeaguesService {
     };
   }
 
+  //TODO IT SHOULD BE DONE IN ONE QUERY WITH AGGRAGTE
+  async getTeamsDetails(league: LeagueDto<ResultDto>): Promise<LeagueDto<ResultWithTeam>>{
+    const results = await Promise.all(league.results.map(async (result) => {
+      const team = await this.teamsService.getTeamByIdLean(result.teamId);
+      return {
+        ...result,
+        team
+      }
+    })) 
+    return {
+      ...league,
+      results
+  }
+}
+
   async getLeagueByIdLean(_id: string): Promise<LeagueDto<FullResultDto>> {
     const league = await this.LeagueModel.findOne({ _id }).lean();
     if (league) {
-      return this.calculatePositions(league);
+      return this.calculatePositions(await this.getTeamsDetails(league));
     }
     return null;
   }
